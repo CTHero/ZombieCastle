@@ -227,6 +227,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1228247}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &20111805
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 20111807}
+  - component: {fileID: 20111806}
+  m_Layer: 0
+  m_Name: restart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &20111806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20111805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6e7603e8f304c24287698573d70bfcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSoundEffect: {fileID: 0}
+--- !u!4 &20111807
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20111805}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 17.5, y: 1.8069999, z: -17.679998}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &54049247
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,9 +495,9 @@ GameObject:
   - component: {fileID: 128307983}
   - component: {fileID: 128307982}
   - component: {fileID: 128307981}
-  m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
+  m_Layer: 3
+  m_Name: weapon
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -639,12 +684,11 @@ GameObject:
   - component: {fileID: 233447834}
   - component: {fileID: 233447833}
   - component: {fileID: 233447832}
-  - component: {fileID: 233447836}
-  - component: {fileID: 233447838}
   - component: {fileID: 233447837}
   - component: {fileID: 233447840}
-  - component: {fileID: 233447839}
   - component: {fileID: 233447841}
+  - component: {fileID: 233447839}
+  - component: {fileID: 233447836}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -769,7 +813,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233447829}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 006e801763d95e7469725a0f9321d740, type: 3}
   m_Name: 
@@ -780,27 +824,6 @@ MonoBehaviour:
     m_Bits: 256
   damageInflicted: 1
   weaponDelay: 1
---- !u!65 &233447838
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 233447829}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 0.66918457, z: 2}
-  m_Center: {x: 0, y: 0.0059099793, z: -0.5}
 --- !u!54 &233447839
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -809,8 +832,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233447829}
   serializedVersion: 4
-  m_Mass: 5
-  m_Drag: 5
+  m_Mass: 1
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -847,7 +870,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   animatableCharacter: {fileID: 0}
-  weapon: {fileID: 233447829}
+  weapon: {fileID: 0}
   walkPointRange: 10
   timeBetweenAttacks: 2
   sightRange: 1000
@@ -2478,7 +2501,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2003523878}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f14a7bf7bf0f7914abbb6cb8b66ddda4, type: 3}
   m_Name: 
@@ -2520,13 +2543,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lastSavePoint: {x: 0, y: 0, z: 0}
   lifeBar: {fileID: 0}
-  maxLives: 1
-  lifeCount: 1
+  maxLives: 5
+  lifeCount: 3
   hiding: 0
   healthBar: {fileID: 0}
-  maxHealth: 5
+  maxHealth: 10
   startHealth: 5
-  deathOption: 1
+  deathOption: 0
 --- !u!4 &2080950794
 Transform:
   m_ObjectHideFlags: 0
@@ -2811,3 +2834,4 @@ SceneRoots:
   - {fileID: 547095860}
   - {fileID: 2094723826}
   - {fileID: 2080950794}
+  - {fileID: 20111807}

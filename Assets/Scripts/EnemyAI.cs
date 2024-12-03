@@ -9,7 +9,6 @@ public class EnemyAI : MonoBehaviour
 
     public LayerMask whatIsGround, whatIsPlayer;
     public Animator animatableCharacter;
-    public GameObject weapon;
     public Weapon theWeapon;
 
     //Patrolling variables
@@ -19,7 +18,6 @@ public class EnemyAI : MonoBehaviour
     //public bool drawGizmos = false;
     Vector3 lastPosition;
     int framesStuck = 0;
-    bool dead = false;
 
     //Attacking variables
     public float timeBetweenAttacks = 2f;
@@ -38,10 +36,6 @@ public class EnemyAI : MonoBehaviour
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
-        if (weapon != null)
-        {
-            theWeapon = weapon.GetComponent<Weapon>();
-        }
     }
 
     // Start is called before the first frame update
@@ -61,34 +55,31 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!dead)
+        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+
+        if (!playerInSightRange && !playerInAttackRange) patrolling();
+
+        if (playerInSightRange && !playerInAttackRange) chasePlayer();
+
+        if (playerInSightRange && playerInAttackRange) attackPlayer();
+
+        //if (drawGizmos) onDrawGizmosSelected();
+
+        if(lastPosition.x == transform.position.x && lastPosition.z == transform.position.z)
         {
-            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-
-            if (!playerInSightRange && !playerInAttackRange) patrolling();
-
-            if (playerInSightRange && !playerInAttackRange) chasePlayer();
-
-            if (playerInSightRange && playerInAttackRange) attackPlayer();
-
-            //if (drawGizmos) onDrawGizmosSelected();
-
-            if (lastPosition.x == transform.position.x && lastPosition.z == transform.position.z)
+            //Start counting to see if it's stuck
+            framesStuck++;
+            if(framesStuck > 30)
             {
-                //Start counting to see if it's stuck
-                framesStuck++;
-                if (framesStuck > 30)
-                {
-                    //Debug.Log("Stuck!!!");
-                    searchWalkPoint();
-                }
+                Debug.Log("Stuck!!!");
+                searchWalkPoint();
             }
-            else
-            {
-                lastPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-                framesStuck = 0;
-            }
+        }
+        else
+        {
+            lastPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            framesStuck = 0;
         }
     }
 
@@ -118,7 +109,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            //Debug.Log("Point is NOT on ground.");
+            Debug.Log("Point is NOT on ground.");
         }
     }
     private void chasePlayer()
@@ -135,13 +126,16 @@ public class EnemyAI : MonoBehaviour
         //Make sure the agent is facing the player
         transform.LookAt(player.position);
 
-       
+        if (animator != null) animator.SetInteger("state", 20);  //Set to attack animation
 
         if (!alreadyAttacked)
         {
-            if (animator != null) animator.SetInteger("state", 21);  //Set to attack animation
+            // Attack code
+            //Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity);
+            //rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            //rb.AddForce(transform.forward * 8f, ForceMode.Impulse);
 
-            if (theWeapon != null)
+            if(theWeapon != null)
             {
                 theWeapon.activate();
             }
@@ -155,7 +149,6 @@ public class EnemyAI : MonoBehaviour
     private void resetAttack()
     {
         alreadyAttacked = false;
-        if (animator != null) animator.SetInteger("state", 1);
     }
 
 

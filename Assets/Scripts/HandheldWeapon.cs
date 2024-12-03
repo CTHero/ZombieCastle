@@ -15,7 +15,6 @@ public class HandheldWeapon : MonoBehaviour, Weapon
 
     void Start()
     {
-        //Debug.Log("Enemy layer: " + enemyLayer.value);
         //If the animated weapon has not been set
         if(animatedWeapon == null)
         {
@@ -33,15 +32,11 @@ public class HandheldWeapon : MonoBehaviour, Weapon
 
     public void OnTriggerEnter(Collider collider)
     {
-        //Debug.Log("Collided!");
-        //Debug.Log(collider.gameObject.layer);
-        if ((enemyLayer.value & (1 << collider.gameObject.layer)) != 0)
+        if ((enemyLayer & (1 << collider.gameObject.layer)) != 0)
         {
-            Debug.Log("Layer Match");
             if (!colliderList.Contains(collider.gameObject))
             {
                 colliderList.Add(collider.gameObject);
-                Debug.Log("Collided Object: " + collider.gameObject.name);
             }
         }
     }
@@ -56,14 +51,23 @@ public class HandheldWeapon : MonoBehaviour, Weapon
 
     public void activate()
     {
-        //Debug.Log("Weapon activated");
+
         if (animator != null) animator.SetInteger("state", 1);
         for (int index = 0; index < colliderList.Count; index++)
         {
             colliderList[index].GetComponent<Health>().takeDamage(damageInflicted);
-            
         }
     }
 
-    public void reload() { }
+    public void reload()
+    {
+       //No reloading on handheld weapons
+    }
+
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 }

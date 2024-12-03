@@ -1,15 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
-public enum DeathOption
-{
-    Nothing,
-    Restart,
-    ReturnToSavePoint
-}
 //A singleton class for storing persistent data between scenes.
 public class DataManager : MonoBehaviour
 {
@@ -24,11 +16,9 @@ public class DataManager : MonoBehaviour
     private int hideCount = 0;
     public bool hiding = false;
 
-    public Image healthBar;
-    public float maxHealth = 10f;
-    public float startHealth = 5f;
-    float health;
-    public DeathOption deathOption = DeathOption.Nothing;
+    public int maxHealth = 10;
+    public int startHealth = 5;
+    int health;
 
     void Awake()
     {
@@ -48,40 +38,6 @@ public class DataManager : MonoBehaviour
     {
         health = startHealth;
     }
-    public void subtractHealth(int amount)
-    {
-        health -= (float)amount;
-        if (health <= 0)
-        {
-            //death.  Do death stuff
-            health = 0;
-            if(deathOption == DeathOption.Restart)
-            {
-
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            }
-        }
-
-        if(healthBar != null)
-        {
-            healthBar.fillAmount = (health/maxHealth);
-        }
-    }
-
-    public void addHealth(int amount)
-    {
-        health += (float)amount;
-        if (health > maxHealth)
-        {
-            health = maxHealth;
-        }
-
-        if (healthBar != null)
-        {
-            healthBar.fillAmount = (health / maxHealth);
-        }
-    }
-
     public void resetLives()
     {
         lifeCount = startLifeCount;

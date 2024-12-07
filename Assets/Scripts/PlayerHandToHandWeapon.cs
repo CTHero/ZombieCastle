@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 // state=0 is weapon idle.  state=1 is the weapon attack animation
@@ -29,10 +30,11 @@ public class PlayerHandToHandWeapon : MonoBehaviour
 
     public void OnTriggerEnter(Collider collider)
     {
+        Debug.Log(collider.gameObject.layer);
         //Checks to see if the object that collided is one of our potential targets
         if ((enemyLayer.value & (1 << collider.gameObject.layer)) != 0)
         {
-
+            Debug.Log("Enemy found!");
             //If it is, add it to the list
             if (!colliderList.Contains(collider.gameObject))
             {
@@ -56,7 +58,6 @@ public class PlayerHandToHandWeapon : MonoBehaviour
 
         if(weaponTriggered && actionAllowed)
         {
-                        Debug.Log("hit!!");
             actionAllowed = false;
 
             if (animator != null) animator.SetInteger("state", 1);
@@ -65,6 +66,10 @@ public class PlayerHandToHandWeapon : MonoBehaviour
             {
                 //And inflicts damage on those NPCs
                 colliderList[index].GetComponent<Health>().takeDamage(damageInflicted);
+                if (colliderList[index].GetComponent<Health>().getHealth() <= 0) {
+                    colliderList.Remove(colliderList[index]);
+                    index--;
+                }
             }
             //Pauses the reactivation of the weapon
             Invoke("weaponReset", timeBetweenAttacks);

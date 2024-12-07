@@ -51,6 +51,7 @@ public class HandheldWeapon : MonoBehaviour, Weapon
 
     public void activate()
     {
+        Debug.Log("My weapon is landing");
 
         if (animator != null) animator.SetInteger("state", 1);
         for (int index = 0; index < colliderList.Count; index++)

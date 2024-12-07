@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine; 
+using UnityEngine.SceneManagement;
 
 //state = 21 is the death animation.
 public class Health : MonoBehaviour
@@ -26,7 +27,7 @@ public class Health : MonoBehaviour
             if (deathSoundEffect != null) deathSoundEffect.Play();
             if (isPlayer)
             {
-                //Kill the player
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
             else
             {
@@ -39,6 +40,9 @@ public class Health : MonoBehaviour
     public void destroyEnemy()
     {
         Destroy(gameObject);
+    }
+    public int getHealth() {
+        return health;
     }
 
 

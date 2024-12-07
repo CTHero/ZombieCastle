@@ -32,6 +32,7 @@ public class PlayerHandToHandWeapon : MonoBehaviour
         //Checks to see if the object that collided is one of our potential targets
         if ((enemyLayer.value & (1 << collider.gameObject.layer)) != 0)
         {
+
             //If it is, add it to the list
             if (!colliderList.Contains(collider.gameObject))
             {
@@ -55,6 +56,7 @@ public class PlayerHandToHandWeapon : MonoBehaviour
 
         if(weaponTriggered && actionAllowed)
         {
+                        Debug.Log("hit!!");
             actionAllowed = false;
 
             if (animator != null) animator.SetInteger("state", 1);
